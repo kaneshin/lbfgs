@@ -129,8 +129,7 @@ lbfgs(
 {
     char            *method = "Limited Memory BFGS";
     int             status, iter, i, k, memblock_size, storage_nr, work_nr, hist_nr;
-    nlp_float       g_norm,
-                    *_x, *storage, *work, *d, *g, *x_prev, *g_prev,
+    nlp_float       g_norm, *_x, *storage, *work, *d, *g, *x_prev, *g_prev,
                     **s, **y, *gamma;
     nlp_component   component;
     evaluate_object eval_obj;
