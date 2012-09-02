@@ -2,7 +2,7 @@
  * File:        lbfgs.c
  * Version:     0.1.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 01-Sep-2012.
+ * Last Change: 02-Sep-2012.
  */
 
 #include "include/lbfgs.h"
@@ -11,8 +11,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "exmath/include/exmath.h"
 #include "linesearch/include/linesearch.h"
+#include "exmath/include/exmath.h"
 
 #ifndef LBFGS_PRINT_DEBUG
 #define LBFGS_PRINT_DEBUG
@@ -123,6 +123,7 @@ lbfgs(
     int n,
     function_object *func_obj,
     linesearch_t linesearch,
+    linesearch_parameter *ls_parameter,
     lbfgs_parameter *parameter
 )
 {
@@ -223,13 +224,12 @@ lbfgs(
         parameter = &_parameter;
     default_lbfgs_parameter(parameter);
 
-#if 0
     /* parameter of Line Search */
-    if (NULL == line_search_parameter) {
-        status = NON_LINEAR_NO_PARAMETER;
+    if (NULL == ls_parameter)
+    {
+        status = LBFGS_LINESEARCH_NO_PARAMETER;
         goto lbfgs_exit;
     }
-#endif
 
     /*
      * start to compute for solving this problem
@@ -264,7 +264,7 @@ lbfgs(
         if (status)
             goto lbfgs_exit;
         /* compute step width with a line search algorithm */
-        status = linesearch(work, x, g, d, n, &eval_obj, &component);
+        status = linesearch(work, x, g, d, n, &eval_obj, ls_parameter, &component);
         switch (status)
         {
             case LINESEARCH_VALUE_NAN:

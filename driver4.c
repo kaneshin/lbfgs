@@ -1,7 +1,7 @@
 /*
  * File:        driver4.c
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 01-Sep-2012.
+ * Last Change: 02-Sep-2012.
  *
  * Problem:     Sphere function
  */
@@ -34,6 +34,7 @@ main(int argc, char* argv[])
     int i, n;
     nlp_float *x;
     function_object func_obj;
+    linesearch_parameter ls_parameter;
 
     n = 10;
     x = (nlp_float *)malloc(n * sizeof(nlp_float));
@@ -43,11 +44,14 @@ main(int argc, char* argv[])
     func_obj.func = func;
     func_obj.grad = grad;
 
+    backtracking_wolfe_parameter(&ls_parameter);
+
     lbfgs(
         x,
         n,
         &func_obj,
         backtracking_wolfe,
+        &ls_parameter,
         NULL
     );
 

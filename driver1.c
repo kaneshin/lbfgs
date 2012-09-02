@@ -1,7 +1,7 @@
 /*
  * File:        driver1.c
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 01-Sep-2012.
+ * Last Change: 02-Sep-2012.
  *
  * Problem:
  *     minimize f(x) = (x1 - x2^2)^2 / 2 + (x2 - 2)^2 / 2
@@ -41,26 +41,13 @@ main(int argc, char* argv[])
     int i, n;
     nlp_float *x;
     function_object func_obj;
+    linesearch_parameter ls_parameter;
 
 #if 0
-    linesearchparameter line_search_parameter;
     quasinewtonparameter quasi_newton_parameter;
-    default_armijo_parameter(&line_search_parameter);
     quasi_newton_parameter.formula = 'b';
     quasi_newton_parameter.tolerance = 1.e-8;
     // quasi_newton_parameter.upper_iter = 5000;
-
-    /* int
-     * quasi_newton(
-     *     nlp_float *x,
-     *     nlp_float **b,
-     *     int n,
-     *     FunctionObject *function_object,
-     *     line_search_t line_search,
-     *     LineSearchParameter *line_search_parameter,
-     *     QuasiNewtonParameter *quasi_newton_parameter
-     * );
-     */
 #endif
     n = 2;
 
@@ -71,11 +58,14 @@ main(int argc, char* argv[])
     func_obj.func = func;
     func_obj.grad = grad;
 
+    backtracking_wolfe_parameter(&ls_parameter);
+
     lbfgs(
         x,
         n,
         &func_obj,
         backtracking_wolfe,
+        &ls_parameter,
         NULL
     );
 
