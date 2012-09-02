@@ -54,7 +54,7 @@ main(int argc, char* argv[]) {
     func_obj.func = func;
     func_obj.grad = grad;
 
-    backtracking_wolfe_parameter(&ls_parameter);
+    default_backtracking_wolfe_parameter(&ls_parameter);
 
     lbfgs(
         x,

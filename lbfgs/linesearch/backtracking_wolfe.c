@@ -11,7 +11,7 @@
 #include "../exmath/include/exmath.h"
 
 void
-backtracking_wolfe_parameter(
+default_backtracking_wolfe_parameter(
     linesearch_parameter *parameter
 )
 {

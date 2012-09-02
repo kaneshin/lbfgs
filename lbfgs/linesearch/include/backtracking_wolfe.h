@@ -14,7 +14,7 @@
 typedef struct _linesearch_parameter linesearch_parameter;
 
 void
-backtracking_wolfe_parameter(
+default_backtracking_wolfe_parameter(
     linesearch_parameter *parameter
 );
 
