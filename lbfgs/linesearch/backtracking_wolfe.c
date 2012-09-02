@@ -19,13 +19,12 @@ default_backtracking_wolfe_parameter(
     parameter->minw = 0.;
     parameter->maxw = 50.;
     parameter->width = .5;
-    parameter->beta = .8;
+    parameter->beta = 1.;
     parameter->xi = .001;
     parameter->sigma = .5;
     parameter->dec = .5;
     parameter->inc = 2.1;
 }
-
 
 int
 backtracking_wolfe(
@@ -50,9 +49,7 @@ backtracking_wolfe(
     if (NLP_VALUE_NAN == eval_obj->func(x, n, component))
         return LINESEARCH_VALUE_NAN;
     fx = component->fx;
-    gd = 0.;
-    for (i = 0; i < n; ++i)
-        gd += g[i] * d[i];
+    gd = dot_product(g, d, n);
     for (iter = 1; iter <= parameter->maxit; ++iter)
     {
         for (i = 0; i < n; ++i)
@@ -63,9 +60,7 @@ backtracking_wolfe(
         {
             if (NLP_VALUE_NAN == eval_obj->grad(g_next, x_next, n, component))
                 return LINESEARCH_VALUE_NAN;
-            gd_next = 0.;
-            for (i = 0; i < n; ++i)
-                gd_next += g_next[i] * d[i];
+            gd_next = dot_product(g_next, d, n);
             if (parameter->sigma * gd <= gd_next)
             {
                 component->alpha = beta;
