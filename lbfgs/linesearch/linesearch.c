@@ -1,13 +1,45 @@
 /*
  * File:        linesearch.c
- * Version:     0.1.0
+ * Version:     1.0.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 05-Sep-2012.
+ * Last Change: 06-Sep-2012.
+ *
+ * Linesearch Conditions:
+ *  - Armijo
+ *      Requires #define LINESEARCH_ARMIJO
+ *  - Wolfe
+ *      Requires #define LINESEARCH_WOLFE
+ *  - Strong Wolfe
+ *      Requires #define LINESEARCH_STRONG_WOLFE
+ *  - Wolfe with Backtracking
+ *      Requires #define LINESEARCH_WOLFE_WITH_BACKTRACKING
+ *  - Strong Wolfe with Backtracking
+ *      Requires #define LINESEARCH_STRONG_WOLFE_WITH_BACKTRACKING
+ *
+ * License:     The MIT License (MIT)
+ *
+ * Copyright (c) 2012 Shintaro Kaneko <kaneshin0120@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom
+ * the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
 #include "include/linesearch.h"
-
-#include <string.h>
 
 #include "../exmath/include/exmath.h"
 
@@ -17,24 +49,24 @@ default_linesearch_parameter(
 )
 {
 #ifdef __LINESEARCH_ARMIJO
-    parameter->method = "Armijo";
+    parameter->condition = "Armijo";
 #endif /* __LINESEARCH_ARMIJO */
 #ifdef __LINESEARCH_WOLFE
 #if !defined(__LINESEARCH_WITH_BACKTRACKING)
-    parameter->method = "Wolfe";
+    parameter->condition = "Wolfe";
 #else
-    parameter->method = "Wolfe with Backtracking";
+    parameter->condition = "Wolfe with Backtracking";
 #endif /* __LINESEARCH_WITH_BACKTRACKING */
 #endif /* __LINESEARCH_WOLFE */
 #ifdef __LINESEARCH_STRONG_WOLFE
 #if !defined(__LINESEARCH_WITH_BACKTRACKING)
-    parameter->method = "Strong Wolfe";
+    parameter->condition = "Strong Wolfe";
 #else
-    parameter->method = "Strong Wolfe with Backtracking";
+    parameter->condition = "Strong Wolfe with Backtracking";
 #endif /* __LINESEARCH_WITH_BACKTRACKING */
 #endif /* __LINESEARCH_STRONG_WOLFE */
-    parameter->maxit = 500;
-    parameter->minw = 0.;
+    parameter->maxit = 200;
+    parameter->minw = .0;
     parameter->maxw = 50.;
     parameter->width = .5;
     parameter->beta = 1.;
@@ -125,9 +157,8 @@ linesearch(
         }
 #endif /* __LINESEARCH_WITH_BACKTRACKING */
         beta *= width;
-        if (beta < parameter->minw || beta > parameter->maxw)
+        if (beta <= parameter->minw || beta >= parameter->maxw)
             return LINESEARCH_STEPWIDTH_FAILED;
     }
     return LINESEARCH_FAILED;
 }
-

@@ -99,6 +99,7 @@ static void
 lbfgs_print_result(
     int status,
     int iter,
+    char *condition,
 #ifdef LBFGS_PRINT_RESULT_VERBOSE
     const nlp_float *x,
     const nlp_float *g,
@@ -322,6 +323,7 @@ lbfgs_exit:
     lbfgs_print_result(
         status,
         iter,
+        ls_parameter->condition,
 #ifdef LBFGS_PRINT_RESULT_VERBOSE
         x,
         g,
@@ -476,6 +478,7 @@ static void
 lbfgs_print_result(
     int status,
     int iter,
+    char *condition,
 #ifdef LBFGS_PRINT_RESULT_VERBOSE
     const nlp_float *x,
     const nlp_float *g,
@@ -486,6 +489,7 @@ lbfgs_print_result(
 {
     printf("\n=== %s Result ========================\n", component->method);
     printf("%s Status: %3d\n", component->method, status);
+    printf("Linesearch Condition: %s\n", condition);
     switch (status)
     {
         case LBFGS_VALUE_NAN:

@@ -1,7 +1,7 @@
 /*
  * File:        driver1.c
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 05-Sep-2012.
+ * Last Change: 06-Sep-2012.
  *
  * Problem:
  *     minimize f(x) = (x1 - x2^2)^2 / 2 + (x2 - 2)^2 / 2
