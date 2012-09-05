@@ -2,16 +2,14 @@
  * File:        backtracking_wolfe.h
  * Version:     0.1.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 02-Sep-2012.
+ * Last Change: 05-Sep-2012.
  */
 
 #ifndef OPTIMIZATION_BACKTRACKING_WOLFE_H
 #define OPTIMIZATION_BACKTRACKING_WOLFE_H
 
 #include "../../include/nlp_component.h"
-
-/* forward declared */
-typedef struct _linesearch_parameter linesearch_parameter;
+#include "../include/linesearch.h"
 
 void
 default_backtracking_wolfe_parameter(

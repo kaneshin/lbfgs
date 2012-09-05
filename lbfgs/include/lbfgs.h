@@ -2,16 +2,14 @@
  * File:        lbfgs.h
  * Version:     0.1.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 02-Sep-2012.
+ * Last Change: 05-Sep-2012.
  */
 
 #ifndef OPTIMIZATION_LBFGS_H
 #define OPTIMIZATION_LBFGS_H
 
 #include "nlp_component.h"
-
-/* forward declared */
-typedef struct _linesearch_parameter linesearch_parameter;
+#include "../linesearch/include/linesearch.h"
 
 enum lbfgs_status
 {

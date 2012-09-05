@@ -2,12 +2,11 @@
  * File:        backtracking_wolfe.c
  * Version:     0.1.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 02-Sep-2012.
+ * Last Change: 05-Sep-2012.
  */
 
 #include "include/backtracking_wolfe.h"
 
-#include "include/linesearch.h"
 #include "../exmath/include/exmath.h"
 
 void

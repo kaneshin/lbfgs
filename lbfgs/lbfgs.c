@@ -2,7 +2,7 @@
  * File:        lbfgs.c
  * Version:     0.1.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 02-Sep-2012.
+ * Last Change: 05-Sep-2012.
  */
 
 #include "include/lbfgs.h"
@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "linesearch/include/linesearch.h"
 #include "exmath/include/exmath.h"
 
 #ifndef LBFGS_PRINT_DEBUG
