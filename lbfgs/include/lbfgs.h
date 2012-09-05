@@ -31,7 +31,6 @@ typedef struct _lbfgs_parameter
     int upper_iter;
 } lbfgs_parameter;
 
-
 int
 lbfgs(
     nlp_float *x,

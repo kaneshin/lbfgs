@@ -115,7 +115,6 @@ lbfgs_print_verbose(
     int n
 );
 
-
 int
 lbfgs(
     nlp_float *x,
