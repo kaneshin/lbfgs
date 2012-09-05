@@ -1,7 +1,7 @@
 /*
  * File:        driver4.c
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 05-Sep-2012.
+ * Last Change: 06-Sep-2012.
  *
  * Problem:     Sphere function
  */
@@ -34,6 +34,7 @@ main(int argc, char* argv[])
     nlp_float *x;
     function_object func_obj;
     linesearch_parameter ls_parameter;
+    lbfgs_parameter parameter;
 
     n = 10;
     x = (nlp_float *)malloc(n * sizeof(nlp_float));
@@ -43,14 +44,16 @@ main(int argc, char* argv[])
     func_obj.func = func;
     func_obj.grad = grad;
 
+    default_lbfgs_parameter(&parameter);
     default_linesearch_parameter(&ls_parameter);
 
+    ls_parameter.beta = .8;
     lbfgs(
         x,
         n,
         &func_obj,
         &ls_parameter,
-        NULL
+        &parameter
     );
 
     free_vec(x);

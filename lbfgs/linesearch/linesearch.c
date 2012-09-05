@@ -129,7 +129,7 @@ linesearch(
                 component->alpha = beta;
                 return LINESEARCH_SATISFIED;
 #endif /* __LINESEARCH_WOLFE */
-                if (FABS(gd_next) <= -sgd)
+                if (fabs(gd_next) <= -sgd)
                 {
 #ifdef __LINESEARCH_STRONG_WOLFE
                     component->alpha = beta;

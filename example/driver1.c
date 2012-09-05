@@ -41,13 +41,8 @@ main(int argc, char* argv[])
     nlp_float *x;
     function_object func_obj;
     linesearch_parameter ls_parameter;
+    lbfgs_parameter parameter;
 
-#if 0
-    quasinewtonparameter quasi_newton_parameter;
-    quasi_newton_parameter.formula = 'b';
-    quasi_newton_parameter.tolerance = 1.e-8;
-    // quasi_newton_parameter.upper_iter = 5000;
-#endif
     n = 2;
 
     x = (nlp_float *)malloc(n * sizeof(nlp_float));
@@ -57,6 +52,7 @@ main(int argc, char* argv[])
     func_obj.func = func;
     func_obj.grad = grad;
 
+    default_lbfgs_parameter(&parameter);
     default_linesearch_parameter(&ls_parameter);
 
     lbfgs(
@@ -64,7 +60,7 @@ main(int argc, char* argv[])
         n,
         &func_obj,
         &ls_parameter,
-        NULL
+        &parameter
     );
 
     free_vec(x);

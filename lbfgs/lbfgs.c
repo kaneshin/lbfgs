@@ -1,8 +1,30 @@
 /*
  * File:        lbfgs.c
- * Version:     0.1.0
+ * Version:     0.9.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 05-Sep-2012.
+ * Last Change: 06-Sep-2012.
+ *
+ * License:     The MIT License (MIT)
+ *
+ * Copyright (c) 2012 Shintaro Kaneko <kaneshin0120@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom
+ * the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
 #include "include/lbfgs.h"
@@ -42,11 +64,6 @@
 #define LBFGS_PRINT_RESULT_VERBOSE
 #endif /* LBFGS_PRINT_RESULT_VERBOSE */
 #endif /* LBFGS_PRINT_VERBOSE */
-
-static void
-default_lbfgs_parameter(
-    lbfgs_parameter *parameter
-);
 
 static int
 convergence_criterion(
@@ -116,6 +133,15 @@ lbfgs_print_verbose(
     int n
 );
 
+void
+default_lbfgs_parameter(
+    lbfgs_parameter *parameter
+)
+{
+    parameter->tolerance = 1.e-8;
+    parameter->upper_iter = 3000;
+}
+
 int
 lbfgs(
     nlp_float *x,
@@ -132,6 +158,7 @@ lbfgs(
     nlp_component   component;
     evaluate_object eval_obj;
     lbfgs_parameter _parameter;
+    linesearch_parameter _ls_parameter;
 
     memblock_size = n * sizeof(nlp_float);
     storage_nr = 4;
@@ -218,14 +245,16 @@ lbfgs(
 
     /* set the parameter of Limited Memory BFGS */
     if (NULL == parameter)
+    {
         parameter = &_parameter;
-    default_lbfgs_parameter(parameter);
+        default_lbfgs_parameter(parameter);
+    }
 
     /* parameter of Line Search */
     if (NULL == ls_parameter)
     {
-        status = LBFGS_LINESEARCH_NO_PARAMETER;
-        goto lbfgs_exit;
+        ls_parameter = &_ls_parameter;
+        default_linesearch_parameter(ls_parameter);
     }
 
     /*
@@ -344,15 +373,6 @@ lbfgs_exit:
     return status;
 }
 
-static void
-default_lbfgs_parameter(
-    lbfgs_parameter *parameter
-)
-{
-    parameter->tolerance = 1.e-8;
-    parameter->upper_iter = 3000;
-}
-
 static int
 convergence_criterion(
     nlp_float g_norm,
@@ -379,9 +399,9 @@ lbfgs_direction_search_phase_1(
 
     tau = dot_product(s, y, n);
     _gamma = dot_product(s, p, n);
-    if (ISNAN(tau) || ISNAN(_gamma))
+    if (isnan(tau) || isnan(_gamma))
         return LBFGS_VALUE_NAN;
-    if (ISINF(tau) || ISINF(_gamma))
+    if (isinf(tau) || isinf(_gamma))
         return LBFGS_VALUE_INF;
     if (tau > 0)
     {
@@ -406,9 +426,9 @@ lbfgs_direction_search_phase_2(
 
     tau = dot_product(s, y, n);
     beta = dot_product(y, q, n);
-    if (ISNAN(tau) || ISNAN(beta))
+    if (isnan(tau) || isnan(beta))
         return LBFGS_VALUE_NAN;
-    if (ISINF(tau) || ISINF(beta))
+    if (isinf(tau) || isinf(beta))
         return LBFGS_VALUE_INF;
     if (tau > 0)
     {
