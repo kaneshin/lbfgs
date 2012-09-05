@@ -5,10 +5,10 @@
  * Last Change: 05-Sep-2012.
  */
 
-#include "../../include/nlp_component.h"
-
 #ifndef EXMATH_H
 #define EXMATH_H
+
+#include "../../include/nlp_component.h"
 
 #ifdef INF
 #undef INF
