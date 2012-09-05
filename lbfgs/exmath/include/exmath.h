@@ -2,8 +2,10 @@
  * File:        exmath.h
  * Version:     0.1.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 01-Sep-2012.
+ * Last Change: 05-Sep-2012.
  */
+
+#include "../../include/nlp_component.h"
 
 #ifndef EXMATH_H
 #define EXMATH_H
@@ -33,16 +35,16 @@
 #endif /* FABS */
 #define FABS(a) (((a) > (0)) ? (a) : (-a))
 
-double
+nlp_float
 dot_product(
-    const double *x,
-    const double *y,
+    const nlp_float *x,
+    const nlp_float *y,
     int n
 );
 
-double
+nlp_float
 infinity_norm(
-    const double *x,
+    const nlp_float *x,
     int n
 );
 

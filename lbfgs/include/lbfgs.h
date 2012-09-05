@@ -25,7 +25,8 @@ enum lbfgs_status
     LBFGS_OUT_OF_MEMORY,
 };
 
-typedef struct _lbfgs_parameter {
+typedef struct _lbfgs_parameter
+{
     nlp_float tolerance;
     int upper_iter;
 } lbfgs_parameter;

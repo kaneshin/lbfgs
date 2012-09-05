@@ -2,30 +2,30 @@
  * File:        exmath.c
  * Version:     0.1.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 01-Sep-2012.
+ * Last Change: 05-Sep-2012.
  */
 
 #include "include/exmath.h"
 
 #include <stdlib.h>
 
-double
+nlp_float
 dot_product(
-    const double *x,
-    const double *y,
+    const nlp_float *x,
+    const nlp_float *y,
     int n
 )
 {
     int i;
-    double dot = x[0] * y[0];
+    nlp_float dot = x[0] * y[0];
     for (i = 1; i < n; ++i)
         dot += x[i] * y[i];
     return dot;
 }
 
-double
+nlp_float
 infinity_norm(
-    const double *x,
+    const nlp_float *x,
     int n
 )
 {
@@ -33,7 +33,7 @@ infinity_norm(
      * norm = max(|x_0|, |x_1|, ..., |x_n|)
      */
     int i;
-    double norm, fabs_x;
+    nlp_float norm, fabs_x;
     for (i = 1, norm = FABS(x[0]); i < n; ++i)
     {
         fabs_x = FABS(x[i]);
