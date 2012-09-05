@@ -25,17 +25,6 @@ enum lbfgs_status
     LBFGS_OUT_OF_MEMORY,
 };
 
-typedef int (* linesearch_t)(
-    nlp_float *,
-    const nlp_float *,
-    const nlp_float *,
-    const nlp_float *,
-    int,
-    evaluate_object *,
-    linesearch_parameter *,
-    nlp_component *
-);
-
 typedef struct _lbfgs_parameter {
     nlp_float tolerance;
     int upper_iter;
@@ -47,7 +36,6 @@ lbfgs(
     nlp_float *x,
     int n,
     function_object *func_obj,
-    linesearch_t linesearch,
     linesearch_parameter *ls_parameter,
     lbfgs_parameter *parameter
 );

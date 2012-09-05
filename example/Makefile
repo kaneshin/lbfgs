@@ -6,8 +6,7 @@ CC = gcc
 CFLAGS = -Wall -O3
 LBFGSSRCS = nlp_component.c\
 			lbfgs.c
-LSSRCS = linesearch.c\
-		 backtracking_wolfe.c
+LSSRCS = linesearch.c
 LBFGSOBJS = $(LBFGSSRCS:%.c=%.o)
 LSOBJS = $(LSSRCS:%.c=%.o)
 SRCDIR = ../lbfgs

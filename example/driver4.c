@@ -12,7 +12,6 @@
 
 #include "../lbfgs/include/nlp_component.h"
 #include "../lbfgs/linesearch/include/linesearch.h"
-#include "../lbfgs/linesearch/include/backtracking_wolfe.h"
 #include "../lbfgs/exmath/include/exmath.h"
 
 static nlp_float
@@ -44,13 +43,12 @@ main(int argc, char* argv[])
     func_obj.func = func;
     func_obj.grad = grad;
 
-    default_backtracking_wolfe_parameter(&ls_parameter);
+    default_linesearch_parameter(&ls_parameter);
 
     lbfgs(
         x,
         n,
         &func_obj,
-        backtracking_wolfe,
         &ls_parameter,
         NULL
     );

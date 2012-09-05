@@ -121,7 +121,6 @@ lbfgs(
     nlp_float *x,
     int n,
     function_object *func_obj,
-    linesearch_t linesearch,
     linesearch_parameter *ls_parameter,
     lbfgs_parameter *parameter
 )

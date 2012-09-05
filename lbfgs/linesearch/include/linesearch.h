@@ -2,7 +2,7 @@
  * File:        linesearch.h
  * Version:     0.1.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 01-Sep-2012.
+ * Last Change: 05-Sep-2012.
  */
 
 #ifndef OPTIMIZATION_LINESEARCH_H
@@ -29,6 +29,24 @@ typedef struct _linesearch_parameter {
     nlp_float dec;
     nlp_float inc;
 } linesearch_parameter;
+
+void
+default_linesearch_parameter(
+    linesearch_parameter *parameter
+);
+
+int
+linesearch(
+    nlp_float *work,
+    const nlp_float *x,
+    const nlp_float *g,
+    const nlp_float *d,
+    int n,
+    evaluate_object *eval_obj,
+    linesearch_parameter *parameter,
+    nlp_component *component
+);
+
 
 #endif /* OPTIMIZATION_LINE_SEARCH_COMPONENT_H */
 
