@@ -2,7 +2,7 @@
  * File:        nlp_component.h
  * Version:     0.1.0
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
- * Last Change: 01-Sep-2012.
+ * Last Change: 05-Sep-2012.
  */
 
 #ifndef OPTIMIZATION_NLP_COMPONENT_H
@@ -17,9 +17,9 @@ enum {
 #define NLP_DEFAULT_FLOAT NLP_PRECISE_FLOAT_64_BIT
 #endif /* NLP_DEFAULT_FLOAT */
 
-#if NLP_FLOAT == NLP_PRECISE_FLOAT_64_BIT
+#if NLP_DEFAULT_FLOAT == NLP_PRECISE_FLOAT_64_BIT
     typedef double nlp_float;
-#elif NLP_FLOAT == NLP_PRECISE_FLOAT_32_BIT
+#elif NLP_DEFAULT_FLOAT == NLP_PRECISE_FLOAT_32_BIT
     typedef float nlp_float;
 #else
 #warning "Use Single-precision floating-point format (float: 32 bits) for nlp_float."
