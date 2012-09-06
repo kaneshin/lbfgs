@@ -1,6 +1,6 @@
 # File:         Makefile
 # Maintainer:   Shintaro Kaneko <kaneshin0120@gmail.com>
-# Last Change:  05-Sep-2012.
+# Last Change:  06-Sep-2012.
 
 CC = gcc
 CFLAGS = -Wall -O3
@@ -15,7 +15,7 @@ OBJDIR = bin
 SRCS = $(patsubst %,$(SRCDIR)/%,$(LBFGSSRCS) $(LSSRCS))
 OBJS = $(patsubst %,$(OBJDIR)/%,$(LBFGSOBJS) $(LSOBJS))
 
-PROGS = driver1 driver4 driver7
+PROGS = driver1 driver2 driver3
 
 all: $(PROGS)
 

@@ -1,5 +1,5 @@
 /*
- * File:        driver4.c
+ * File:        driver2.c
  * Maintainer:  Shintaro Kaneko <kaneshin0120@gmail.com>
  * Last Change: 06-Sep-2012.
  *
@@ -7,6 +7,8 @@
  */
 
 #include "../lbfgs/include/lbfgs.h"
+
+#include <stdio.h>
 
 #include "../lbfgs/include/nlp_component.h"
 #include "../lbfgs/linesearch/include/linesearch.h"
@@ -28,7 +30,7 @@ grad(
 int
 main(int argc, char* argv[])
 {
-    int i, n;
+    int i, n, status;
     nlp_float *x;
     function_object func_obj;
     linesearch_parameter ls_parameter;
@@ -46,13 +48,22 @@ main(int argc, char* argv[])
     default_linesearch_parameter(&ls_parameter);
 
     ls_parameter.beta = .8;
-    lbfgs(
+
+    status = lbfgs(
         x,
         n,
         &func_obj,
         &ls_parameter,
         &parameter
     );
+
+    if (LBFGS_SATISFIED == status)
+    {
+        printf("\n=== Optimal x =========================================\n");
+        for (i = 0; i < n; ++i)
+            printf(" x_%-8d = %12.6e\n", i + 1 , x[i]);
+        printf("=======================================================\n");
+    }
 
     free_vec(x);
     return 0;

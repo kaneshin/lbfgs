@@ -15,6 +15,8 @@
 
 #include "../lbfgs/include/lbfgs.h"
 
+#include <stdio.h>
+
 #include "../lbfgs/include/nlp_component.h"
 #include "../lbfgs/linesearch/include/linesearch.h"
 #include "../lbfgs/exmath/include/exmath.h"
@@ -35,7 +37,7 @@ grad(
 int
 main(int argc, char* argv[])
 {
-    int i, n;
+    int i, n, status;
     nlp_float *x;
     function_object func_obj;
     linesearch_parameter ls_parameter;
@@ -53,13 +55,21 @@ main(int argc, char* argv[])
     default_lbfgs_parameter(&parameter);
     default_linesearch_parameter(&ls_parameter);
 
-    lbfgs(
+    status = lbfgs(
         x,
         n,
         &func_obj,
         &ls_parameter,
         &parameter
     );
+
+    if (LBFGS_SATISFIED == status)
+    {
+        printf("\n=== Optimal x =========================================\n");
+        for (i = 0; i < n; ++i)
+            printf(" x_%-8d = %12.6e\n", i + 1 , x[i]);
+        printf("=======================================================\n");
+    }
 
     free_vec(x);
     return 0;
