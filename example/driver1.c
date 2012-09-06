@@ -15,8 +15,6 @@
 
 #include "../lbfgs/include/lbfgs.h"
 
-#include <stdlib.h>
-
 #include "../lbfgs/include/nlp_component.h"
 #include "../lbfgs/linesearch/include/linesearch.h"
 #include "../lbfgs/exmath/include/exmath.h"
@@ -45,7 +43,7 @@ main(int argc, char* argv[])
 
     n = 2;
 
-    x = (nlp_float *)malloc(n * sizeof(nlp_float));
+    x = (nlp_float *)malloc_vec(n * sizeof(nlp_float));
     for (i = 0; i < n; ++i)
         x[i] = 0.;
 
