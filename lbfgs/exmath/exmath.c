@@ -29,8 +29,6 @@
 
 #include "include/exmath.h"
 
-#include <stdlib.h>
-
 nlp_float
 dot_product(
     const nlp_float *x,
@@ -65,6 +63,15 @@ infinity_norm(
     return norm;
 }
 
+void*
+malloc_vec(
+    size_t mem_size
+)
+{
+    void *mem = (void *)malloc(mem_size);
+    return mem;
+}
+
 void
 free_vec(
     void *mem
@@ -75,6 +82,15 @@ free_vec(
         free(mem);
         mem = NULL;
     }
+}
+
+void**
+malloc_mat(
+    size_t mem_size
+)
+{
+    void **mem = (void **)malloc(mem_size);
+    return mem;
 }
 
 void

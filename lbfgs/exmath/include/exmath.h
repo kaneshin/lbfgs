@@ -30,6 +30,8 @@
 #ifndef EXMATH_H
 #define EXMATH_H
 
+#include <stdlib.h>
+
 #include "../../include/nlp_component.h"
 
 #ifdef INF
@@ -77,9 +79,19 @@ infinity_norm(
     int n
 );
 
+void*
+malloc_vec(
+    size_t mem_size
+);
+
 void
 free_vec(
     void *mem
+);
+
+void**
+malloc_mat(
+    size_t mem_size
 );
 
 void

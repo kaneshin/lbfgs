@@ -30,22 +30,16 @@
 #include "include/lbfgs.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include "exmath/include/exmath.h"
 
-#ifndef LBFGS_PRINT_DEBUG
-#define LBFGS_PRINT_DEBUG
-#endif /* LBFGS_PRINT_DEBUG */
+#define LBFGS_PRINT_RESULT
 
-#ifndef LBFGS_PRINT
-#define LBFGS_PRINT
-#endif /* LBFGS_PRINT */
-
-#ifndef LBFGS_PRINT_VERBOSE
-#define LBFGS_PRINT_VERBOSE
-#endif /* LBFGS_PRINT_VERBOSE */
+/*
+ * #define LBFGS_PRINT
+ * #define LBFGS_PRINT_VERBOSE
+ */
 
 #ifdef LBFGS_PRINT
 #ifndef LBFGS_PRINT_ITER
@@ -167,7 +161,7 @@ lbfgs(
 
     if (NULL == x)
     {
-        _x = (nlp_float *)malloc(memblock_size);
+        _x = (nlp_float *)malloc_vec(memblock_size);
         if (NULL != _x)
             for (i = 0; i < n; ++i)
                 _x[i] = 0.;
@@ -180,10 +174,10 @@ lbfgs(
         _x = NULL;
     }
 
-    s = (nlp_float **)malloc(hist_nr * sizeof(nlp_float *));
+    s = (nlp_float **)malloc_mat(hist_nr * sizeof(nlp_float *));
     if (NULL != s)
     {
-        *s = (nlp_float *)malloc(hist_nr * memblock_size);
+        *s = (nlp_float *)malloc_vec(hist_nr * memblock_size);
         if (NULL != *s)
             for (i = 1; i < hist_nr; ++i)
                 s[i] = s[i - 1] + n;
@@ -194,10 +188,10 @@ lbfgs(
     {
         status = LBFGS_OUT_OF_MEMORY;
     }
-    y = (nlp_float **)malloc(hist_nr * sizeof(nlp_float *));
+    y = (nlp_float **)malloc_mat(hist_nr * sizeof(nlp_float *));
     if (NULL != y)
     {
-        *y = (nlp_float *)malloc(hist_nr * memblock_size);
+        *y = (nlp_float *)malloc_vec(hist_nr * memblock_size);
         if (NULL != *y)
             for (i = 1; i < hist_nr; ++i)
                 y[i] = y[i - 1] + n;
@@ -214,9 +208,9 @@ lbfgs(
                 s[k][i] = y[k][i] = 0.;
 
     /* allocate memory to storage for d, g, x_prev, g_prev, s and y */
-    storage = (nlp_float *)malloc(storage_nr * memblock_size);
-    work = (nlp_float *)malloc(work_nr * memblock_size);
-    gamma = (nlp_float *)malloc(hist_nr * sizeof(nlp_float));
+    storage = (nlp_float *)malloc_vec(storage_nr * memblock_size);
+    work = (nlp_float *)malloc_vec(work_nr * memblock_size);
+    gamma = (nlp_float *)malloc_vec(hist_nr * sizeof(nlp_float));
 
     if (NULL == storage || NULL == work || NULL == gamma)
         status = LBFGS_OUT_OF_MEMORY;
